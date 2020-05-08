@@ -15,7 +15,12 @@
 
                     <div class="message-body" v-text="status.body">
                     </div>
+
                 </div>
+
+                <!-- Add to stream form -->
+                <add-to-stream @completed="addStatus"></add-to-stream>
+
             </div>
         </div>
     </div>
@@ -24,8 +29,12 @@
 <script>
     import moment from 'moment';
     import Status from '../models/Status';
+    import AddToStream from '../components/AddToStream';
 
     export default {
+        components: {
+            AddToStream
+        },
         data() {
             return {
                 statuses: []
@@ -33,8 +42,7 @@
         },
         filters: {
             ago(date) {
-                console.log(moment(status.created_at).fromNow());
-                return moment(status.created_at).fromNow();
+                return moment(date).fromNow();
             },
             capitalize(value) {
                 return value.toUpperCase();
@@ -51,5 +59,13 @@
                 return moment(status.created_at).fromNow();
             }
         }*/
+        methods: {
+            addStatus(status) {
+                this.statuses.unshift(status); // same as push, except pushes it at BEGINNING of array, not the end!
+
+                alert('Your status has been added to the stream');
+                window.scrollTo(0,0);
+            }
+        }
     }
 </script>
